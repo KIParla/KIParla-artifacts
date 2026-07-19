@@ -17,6 +17,11 @@ function toggleTimes(btn) {
     var on = t.classList.toggle('show-times');
     btn.classList.toggle('active', on);
 }
+function toggleTranslations(btn) {
+    var t = document.querySelector('.transcript');
+    var on = t.classList.toggle('show-translations');
+    btn.classList.toggle('active', on);
+}
 function toggleTimeline(btn) {
     isTimelineVisible = !isTimelineVisible;
     document.body.classList.toggle('timeline-collapsed', !isTimelineVisible);

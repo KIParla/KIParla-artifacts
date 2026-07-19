@@ -289,6 +289,32 @@ tbody td {
 }
 .show-times .turn-time { display: block; }
 
+/* ── translations (hidden until .show-translations on .transcript) ── */
+.turn-translation-label,
+.turn-translation-text {
+    display: none;
+}
+.show-translations .turn-translation-label,
+.show-translations .turn-translation-text {
+    display: block;
+}
+.turn-translation-label {
+    grid-column: 1;
+    font-size: .75rem;
+    color: #999;
+    padding-top: .1rem;
+}
+.turn-translation-label::after { content: "traduzione"; }
+.turn-translation-text {
+    grid-column: 2;
+    font-style: italic;
+    color: #666;
+    margin-top: .15rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
 /* ── Jefferson notation ── */
 .jtext { font: inherit; }
 .overlap { color: #2060a0; }
