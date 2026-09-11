@@ -5,7 +5,25 @@
     --base-font-size: 15px;
     --transcript-font-size: 1rem;
     --timeline-handle-size: 14px;
+    /* kiparla.it brand accent (theme customizer: link/button/nav colour) */
+    --brand: #dd3333;
+    --brand-dark: #ab0101;
 }
+
+/* ── speaker colours (assigned round-robin; see SPEAKER_COLOURS in
+   linear2html.py) — set color only, .dot/.speaker-segment pick it up via
+   currentColor so no per-turn inline style is needed ── */
+.spk-0 { color: #3a6b8a; }
+.spk-1 { color: #4f7a3a; }
+.spk-2 { color: #7a4f8a; }
+.spk-3 { color: #2f8a78; }
+.spk-4 { color: #8a7a2f; }
+.spk-5 { color: #4f4f8a; }
+.spk-6 { color: #2f6b4f; }
+.spk-7 { color: #8a4f6b; }
+.spk-8 { color: #4f7a8a; }
+.spk-9 { color: #6b5a3a; }
+.spk-unknown { color: #767672; }  /* fixed grey for ???/?? */
 
 body {
     font-family: 'Segoe UI', system-ui, sans-serif;
@@ -51,6 +69,8 @@ body.timeline-collapsed {
     color: #333;
     margin-bottom: .85rem;
     line-height: 1.25;
+    border-bottom: 2px solid var(--brand);
+    padding-bottom: .5rem;
 }
 
 .left-rail .toggle-bar {
@@ -90,6 +110,7 @@ body.timeline-collapsed {
 
 .download-links a:hover {
     background: #f0e8dc;
+    border-color: var(--brand);
 }
 
 /* ── sidebar ── */
@@ -170,7 +191,7 @@ body.timeline-collapsed {
     transition: background .15s, color .15s;
 }
 .sidebar-toggle:hover,
-.sidebar-toggle.active { background: #333; color: #fff; border-color: #333; }
+.sidebar-toggle.active { background: var(--brand); color: #fff; border-color: var(--brand); }
 
 /* ── participant table ── */
 table {
@@ -203,6 +224,7 @@ tbody td {
     margin-right: .35rem;
     vertical-align: middle;
     flex-shrink: 0;
+    background: currentColor;
 }
 
 /* ── toggle bar ── */
@@ -224,10 +246,12 @@ tbody td {
     transition: background .15s, color .15s;
 }
 .toggle-bar button.active {
-    background: #333;
+    background: var(--brand);
     color: #fff;
-    border-color: #333;
+    border-color: var(--brand);
 }
+
+.toggle-sep-bar { color: #ddd; margin: 0 .3rem; }
 
 /* ── transcript container ── */
 .transcript-shell {
@@ -433,20 +457,21 @@ tbody td {
 
 .timeline-marker.active {
     height: 14px;
-    background: #2d6c99;
+    background: var(--brand);
     opacity: 1;
 }
 
 .timeline-playhead {
     position: absolute;
     top: 50%;
+    left: 0;
     width: var(--timeline-handle-size);
     height: var(--timeline-handle-size);
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: #2d6c99;
+    background: var(--brand);
     border: 2px solid #fff;
-    box-shadow: 0 0 0 3px rgba(45, 108, 153, .18);
+    box-shadow: 0 0 0 3px rgba(221, 51, 51, .18);
     cursor: grab;
 }
 
@@ -492,6 +517,7 @@ tbody td {
     border-radius: 999px;
     opacity: .55;
     cursor: pointer;
+    background: currentColor;
 }
 
 .speaker-segment.active {
@@ -501,7 +527,7 @@ tbody td {
 
 .timeline-marker.hover-linked {
     height: 16px;
-    background: #1f4f73;
+    background: var(--brand-dark);
     opacity: 1;
 }
 
@@ -519,6 +545,8 @@ footer {
     color: #aaa;
     text-align: center;
 }
+footer a { color: var(--brand); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 
 @media (max-width: 720px) {
     .page {

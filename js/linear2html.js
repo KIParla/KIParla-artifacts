@@ -311,6 +311,35 @@ function formatMsLabel(begin, end) {
     var e = formatSingleMs(end);
     return b && e && b !== e ? (b + ' - ' + e) : (b || e);
 }
+// ── delegated event wiring (all markup uses data-action / classes, never
+// inline onclick/onpointerdown) ──
+var ACTIONS = {
+    'show-panel':          function(btn) { showPanel(btn.dataset.panel); },
+    'toggle-times':        function(btn) { toggleTimes(btn); },
+    'toggle-translations': function(btn) { toggleTranslations(btn); },
+    'toggle-timeline':     function(btn) { toggleTimeline(btn); },
+    'toggle-sidebar':      function()    { toggleSidebar(); },
+    'font-inc':            function()    { increaseFontSize(); },
+    'font-dec':            function()    { decreaseFontSize(); },
+    'zoom-in':             function()    { zoomTimeline(1.25); },
+    'zoom-out':            function()    { zoomTimeline(0.8); },
+};
+document.addEventListener('click', function(event) {
+    var actionEl = event.target.closest('[data-action]');
+    if (actionEl && ACTIONS[actionEl.dataset.action]) {
+        ACTIONS[actionEl.dataset.action](actionEl);
+        return;
+    }
+    var jumpEl = event.target.closest('.timeline-marker, .speaker-segment');
+    if (jumpEl) scrollToTimelineUnit(event);
+});
+document.addEventListener('pointerdown', function(event) {
+    // Clicking a marker/segment jumps to it (handled on 'click'); it must
+    // not also start a drag of the playhead underneath.
+    if (event.target.closest('.timeline-marker, .speaker-segment')) return;
+    if (event.target.closest('.timeline-track')) startTimelineDrag(event);
+});
+
 window.addEventListener('scroll', updateTimeline, { passive: true });
 window.addEventListener('resize', updateTimeline);
 window.addEventListener('load', function() {
