@@ -364,6 +364,7 @@ tbody td {
 .trunc   { color: #999; }
 .length  { color: #b05010; }
 .variation { color: var(--brand); font-weight: 600; }
+.emerging  { color: #7a3a8a; font-weight: 600; }
 
 /* ── scroll timeline ── */
 .timeline {
