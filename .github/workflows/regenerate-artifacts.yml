@@ -1,0 +1,89 @@
+# Regenerates the published HTML/PDF pages for one module when its
+# underlying data changes, replacing the manual
+# `tools/generate_artifacts.py` step described in README.md.
+#
+# Triggered by `repository_dispatch: data-updated`, dispatched by
+# KIParla-NoSketch-Data/.github/workflows/regenerate-on-release.yml after it
+# regenerates that module's NoSketch corpus.
+#   Payload: { module, tag }
+# `module`/`tag` are also passed to generate_artifacts.py as --release-label /
+# --release-url, so every regenerated HTML page and PDF cites the module
+# release it came from, alongside the license, in its footer/metadata table.
+#
+# Required secret in this repo:
+#   KIPARLA_ORG_TOKEN — a GitHub PAT with `repo` scope on KIParla/tools and
+#   on the module repos (to check them out).
+#   (Settings → Secrets and variables → Actions → New repository secret)
+#
+# PDF export shells out to `pandoc` with `--pdf-engine=xelatex`
+# (tools/linear2html.py), so the runner needs a LaTeX toolchain — this is
+# why the apt-get step below is comparatively heavy/slow.
+
+name: Regenerate artifacts
+
+on:
+  repository_dispatch:
+    types: [data-updated]
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout KIParla-artifacts
+        uses: actions/checkout@v4
+        with:
+          path: KIParla-artifacts
+
+      - name: Checkout tools
+        uses: actions/checkout@v4
+        with:
+          repository: KIParla/tools
+          token: ${{ secrets.KIPARLA_ORG_TOKEN }}
+          path: tools
+
+      - name: Checkout module at released tag
+        uses: actions/checkout@v4
+        with:
+          repository: KIParla/${{ github.event.client_payload.module }}
+          ref: ${{ github.event.client_payload.tag }}
+          token: ${{ secrets.KIPARLA_ORG_TOKEN }}
+          path: ${{ github.event.client_payload.module }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install tools dependencies
+        working-directory: tools
+        run: pip install .
+
+      - name: Install pandoc + xelatex
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends pandoc texlive-xetex texlive-fonts-recommended
+
+      - name: Generate HTML + PDF artifacts
+        run: |
+          python3 tools/generate_artifacts.py \
+            --module-root "${{ github.event.client_payload.module }}" \
+            --artifacts-root KIParla-artifacts \
+            --release-label "${{ github.event.client_payload.module }}@${{ github.event.client_payload.tag }}" \
+            --release-url "https://github.com/KIParla/${{ github.event.client_payload.module }}/releases/tag/${{ github.event.client_payload.tag }}"
+
+      - name: Commit regenerated artifacts
+        working-directory: KIParla-artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "${{ github.event.client_payload.module }}/html" \
+                  "${{ github.event.client_payload.module }}/pdf"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Regenerate ${{ github.event.client_payload.module }}@${{ github.event.client_payload.tag }} artifacts"
+            git push
+          fi
