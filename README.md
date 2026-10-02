@@ -4,6 +4,8 @@ This repository stores published KIParla artifacts derived from corpus data.
 
 Current artifact types:
 
+* the corpus explorer (`explorer/index.html`): filter the conversations by metadata, speakers and
+  measured features, see figures for the resulting sub-corpus, export it
 * HTML conversation pages
 * PDF exports of orthographic and Jefferson transcripts
 * shared CSS and JavaScript assets
@@ -12,6 +14,8 @@ Current artifact types:
 
 ```text
 KIParla-artifacts/
+  explorer/
+    index.html
   css/
     linear2html.css
   js/
