@@ -19,7 +19,7 @@ KIParla-artifacts/
     explorer.css
     core.js
     app.js
-    data.js
+    data.json
   css/
     linear2html.css
   js/
