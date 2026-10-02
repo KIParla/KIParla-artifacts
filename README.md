@@ -16,6 +16,10 @@ Current artifact types:
 KIParla-artifacts/
   explorer/
     index.html
+    explorer.css
+    core.js
+    app.js
+    data.js
   css/
     linear2html.css
   js/
