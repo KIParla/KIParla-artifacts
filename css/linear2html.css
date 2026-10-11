@@ -253,7 +253,7 @@ tbody td {
 
 .toggle-sep-bar { color: #ddd; margin: 0 .3rem; }
 
-/* ── ortografico/Jefferson switch (two connected segments, not two buttons) ── */
+/* ── ortografico/enriched switch (two connected segments, not two buttons) ── */
 .view-switch {
     display: inline-flex;
     border: 1px solid #ccc;
@@ -355,7 +355,7 @@ tbody td {
     word-break: break-word;
 }
 
-/* ── Jefferson notation ── */
+/* ── enriched notation ── */
 .jtext { font: inherit; }
 .overlap { color: #2060a0; }
 .para    { color: #777; font-style: italic; }

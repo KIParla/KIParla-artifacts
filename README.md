@@ -4,14 +4,24 @@ This repository stores published KIParla artifacts derived from corpus data.
 
 Current artifact types:
 
+* the corpus explorer (`explorer/index.html`): filter the conversations by metadata, speakers and
+  measured features, see figures for the resulting sub-corpus, export it
+* the index page (`index.html`): all the modules, with filters on the conversation metadata (module, type, year, collection point, community, languages, unidentified speakers) and on the code. It is generated, not edited by hand:
+  `python3 tools/build_index.py --modules-root <modules> --artifacts-root KIParla-artifacts`
 * HTML conversation pages
-* PDF exports of orthographic and Jefferson transcripts
+* PDF exports of orthographic and enriched transcripts
 * shared CSS and JavaScript assets
 
 ## Repository layout
 
 ```text
 KIParla-artifacts/
+  explorer/
+    index.html
+    explorer.css
+    core.js
+    app.js
+    data.json
   css/
     linear2html.css
   js/
@@ -22,7 +32,7 @@ KIParla-artifacts/
       ...
     pdf/
       BOA1001-orthographic.pdf
-      BOA1001-jefferson.pdf
+      BOA1001-enriched.pdf
       ...
   KIPasti/
     html/
@@ -75,7 +85,7 @@ PDFs are expected at:
 
 ```text
 <ARTIFACTS_BASE_URL>/<MODULE>/pdf/<CODE>-orthographic.pdf
-<ARTIFACTS_BASE_URL>/<MODULE>/pdf/<CODE>-jefferson.pdf
+<ARTIFACTS_BASE_URL>/<MODULE>/pdf/<CODE>-enriched.pdf
 ```
 
 ## Generating artifacts
@@ -87,7 +97,7 @@ Example:
 ```bash
 python3 tools/linear2html.py \
   --orthographic ParlaTO/linear-orthographic/PTA005.txt \
-  --jefferson ParlaTO/linear-jefferson/PTA005.txt \
+  --enriched ParlaTO/linear-enriched/PTA005.txt \
   --tsv ParlaTO/tsv/PTA005.vert.tsv \
   --conversations ParlaTO/metadata/conversations.tsv \
   --participants ParlaTO/metadata/participants.tsv \
@@ -98,7 +108,7 @@ This writes:
 
 * `KIParla-artifacts/ParlaTO/html/PTA005.html`
 * `KIParla-artifacts/ParlaTO/pdf/PTA005-orthographic.pdf`
-* `KIParla-artifacts/ParlaTO/pdf/PTA005-jefferson.pdf`
+* `KIParla-artifacts/ParlaTO/pdf/PTA005-enriched.pdf`
 
 The module name is inferred from the metadata path by default.
 You can override it with `--module`.
@@ -109,7 +119,7 @@ For modules with a translation layer (Stra-ParlaBO, Stra-ParlaTO), add `--transl
 ```bash
 python3 tools/linear2html.py \
   --orthographic Stra-ParlaTO/linear-orthographic/STCA001.txt \
-  --jefferson Stra-ParlaTO/linear-jefferson/STCA001.txt \
+  --enriched Stra-ParlaTO/linear-enriched/STCA001.txt \
   --tsv Stra-ParlaTO/tsv/STCA001.vert.tsv \
   --conversations Stra-ParlaTO/metadata/conversations.tsv \
   --participants Stra-ParlaTO/metadata/participants.tsv \
