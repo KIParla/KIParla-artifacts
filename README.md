@@ -4,8 +4,6 @@ This repository stores published KIParla artifacts derived from corpus data.
 
 Current artifact types:
 
-* the corpus explorer (`explorer/index.html`): filter the conversations by metadata, speakers and
-  measured features, see figures for the resulting sub-corpus, export it
 * the index page (`index.html`): all the modules, with filters on the conversation metadata (module, type, year, collection point, community, languages, unidentified speakers) and on the code. It is generated, not edited by hand:
   `python3 tools/build_index.py --modules-root <modules> --artifacts-root KIParla-artifacts`
 * HTML conversation pages
@@ -16,12 +14,6 @@ Current artifact types:
 
 ```text
 KIParla-artifacts/
-  explorer/
-    index.html
-    explorer.css
-    core.js
-    app.js
-    data.json
   css/
     linear2html.css
   js/
