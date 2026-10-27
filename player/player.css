@@ -1,0 +1,53 @@
+/* Page-specific additions; everything else comes from css/linear2html.css */
+
+audio {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 2px solid var(--brand);
+    border-radius: 30px;
+}
+
+/* the snippet inside the transcript */
+.turn { padding-left: .4rem; padding-right: .4rem; }
+.turn.in-snippet { background: #faf7f2; }
+.turn.focus {
+    background: #f5efe5;
+    border-radius: 8px;
+    box-shadow: inset 3px 0 0 var(--brand);
+}
+/* scrollable transcript of the whole conversation */
+#turns {
+    position: relative;
+    max-height: calc(100vh - 21rem);
+    min-height: 12rem;
+    overflow-y: auto;
+    padding-right: .4rem;
+}
+.turn .turn-text { color: #aaa; }
+.turn.in-snippet .turn-text { color: #555; }
+.turn.focus .turn-text { color: #222; }
+.turn[data-turn] { cursor: pointer; }
+.turn:not(.focus):hover { background: #f5efe5; border-radius: 8px; }
+
+.snippet-nav { justify-content: space-between; margin-bottom: .9rem; }
+.snippet-nav button:disabled { opacity: .4; cursor: default; }
+.snippet-nav button:not(:disabled):hover { background: #f4efe7; }
+
+/* the snippet inside the timeline: a band on the rail (+ .active segments in the lanes) */
+.snippet-band {
+    position: absolute;
+    top: 50%;
+    height: 10px;
+    min-width: 4px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+    background: var(--brand);
+    opacity: .35;
+}
+
+.view-bar { margin-bottom: .9rem; }
+.turn[hidden] { display: none; }
+.turn-translation-text { color: #666; }
+
+audio[hidden] { display: none; }

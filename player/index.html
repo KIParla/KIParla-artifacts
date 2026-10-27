@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Player – KIParla</title>
+<link rel="stylesheet" href="{{PREFIX}}/static/linear2html.css">
+<link rel="stylesheet" href="{{PREFIX}}/static/player.css">
+<script>window.CONVERSATION = {{CONVERSATION}};</script>
+<script src="{{PREFIX}}/static/player.js" defer></script>
+</head>
+<body class="has-timeline">
+<button class="sidebar-toggle" type="button" data-action="toggle-sidebar" aria-controls="sidebar" aria-expanded="false">info</button>
+
+<aside class="sidebar" id="sidebar">
+  <button class="sidebar-close" type="button" data-action="toggle-sidebar" aria-label="Chiudi informazioni">×</button>
+  <section class="sidebar-section">
+    <h2>Conversazione</h2>
+    <div class="meta-grid" id="conv-meta"></div>
+  </section>
+  <section class="sidebar-section participants">
+    <h2>Partecipanti</h2>
+    <table><thead><tr><th>Codice</th><th>Occupazione</th><th>Genere</th><th>Regione</th><th>Età</th><th>Titolo di studio</th></tr></thead><tbody id="conv-participants"></tbody></table>
+  </section>
+</aside>
+
+<div class="page">
+  <aside class="left-rail">
+    <h1 id="conv-code"></h1>
+    <div class="meta-grid"><span data-label="inizio" id="snippet-start"></span>
+<span data-label="fine" id="snippet-end"></span>
+<span data-label="durata snippet" id="snippet-len"></span>
+<span data-label="turni" id="snippet-turns"></span></div>
+    <div class="download-links"><a id="full-link" href="#">Conversazione completa</a></div>
+  </aside>
+
+  <div class="transcript-shell">
+    <audio id="player" controls controlsList="nodownload"></audio>
+    <div class="toggle-bar snippet-nav">
+      <button type="button" id="prev">← precedente</button>
+      <button type="button" id="replay">riascolta</button>
+      <button type="button" id="next">successivo →</button>
+    </div>
+    <div class="toggle-bar view-bar">
+      <span class="view-switch"><button type="button" data-view="orth" class="active">ortografico</button><button type="button" data-view="jeff">Enriched</button></span>
+      <button type="button" id="toggle-translations">traduzioni</button>
+    </div>
+    <section class="transcript">
+      <div class="panel visible" id="turns"></div>
+    </section>
+  </div>
+
+  <footer>
+    KIParla – <a href="https://www.kiparla.it/">kiparla.it</a>
+    · <a href="https://github.com/KIParla/KIParla-artifacts">GitHub</a>
+    · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+  </footer>
+</div>
+
+<div class="timeline" id="timeline">
+  <div class="timeline-head">
+    <span class="timeline-current" id="overview-pos">0:00</span>
+    <span class="timeline-controls"><span class="timeline-total" id="overview-end"></span></span>
+  </div>
+  <div class="speaker-map" id="overview"></div>
+  <div class="timeline-track">
+    <div class="timeline-track-inner">
+      <div class="timeline-rail"></div>
+      <span class="snippet-band" id="overview-window"></span>
+      <span class="timeline-playhead" id="overview-playhead"></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
