@@ -352,3 +352,18 @@ window.addEventListener('pointermove', function(event) {
 });
 window.addEventListener('pointerup', stopTimelineDrag);
 window.addEventListener('pointercancel', stopTimelineDrag);
+
+// Release label: <module>/version.json holds the latest release of the module,
+// so a new release updates one file instead of every page. The text written
+// at generation time stays as the fallback (no JS, file://, missing file).
+(function() {
+    var link = document.getElementById('release-link');
+    if (!link || !link.dataset.versionJson || !window.fetch) return;
+    fetch(link.dataset.versionJson).then(function(r) {
+        return r.ok ? r.json() : null;
+    }).then(function(v) {
+        if (!v || !v.label) return;
+        link.textContent = v.label;
+        if (v.url) link.setAttribute('href', v.url);
+    }).catch(function() {});
+})();
