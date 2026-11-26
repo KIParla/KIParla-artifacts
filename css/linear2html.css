@@ -194,11 +194,11 @@ body.timeline-collapsed {
 .sidebar-toggle.active { background: var(--brand); color: #fff; border-color: var(--brand); }
 
 /* ── participant table ── */
+.table-scroll { overflow-x: auto; }
 table {
     width: 100%;
     border-collapse: collapse;
     font-size: .76rem;
-    table-layout: fixed;
 }
 thead th {
     text-align: left;
@@ -207,16 +207,14 @@ thead th {
     font-weight: 600;
     color: #444;
     border-bottom: 2px solid #ddd;
-    overflow-wrap: anywhere;
 }
 tbody tr:nth-child(odd) { background: #fafafa; }
 tbody td {
     padding: .28rem .5rem;
     border-bottom: 1px solid #e8e8e8;
     vertical-align: middle;
-    overflow-wrap: anywhere;
-    word-break: break-word;
 }
+tbody td { white-space: nowrap; }
 .dot {
     display: inline-block;
     width: 9px; height: 9px;
